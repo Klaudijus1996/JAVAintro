@@ -11,7 +11,7 @@ public class Main {
         vykstaDalykai(mokiniai);
 
         long startTime = System.currentTimeMillis();
-//        pagalKlasePavardeVarda();
+        pagalKlasePavardeVarda();
         long stopTime = System.currentTimeMillis();
         System.out.println("Kiek ms trunka atlikti rusiavima nenaudojant .sort(): ");
         System.out.println((stopTime - startTime)); // jeigu .length() > 100, tai lauksim nuo 870 ms.
@@ -98,19 +98,19 @@ public class Main {
     }
     /*** Sorting without using .sort() ***/
     static void pagalKlasePavardeVarda() {
-        for (int zingsnis = 0; zingsnis < vykstaDalykai(mokiniai).length - 1; zingsnis++) {
+        for (int zingsnis = 0; zingsnis < mokiniai.length - 1; zingsnis++) {
 
             for (int i = zingsnis; i < mokiniai.length; i++) {
 
-                if (vykstaDalykai(mokiniai)[i].getKlase() < vykstaDalykai(mokiniai)[zingsnis].getKlase()) {
+                if (mokiniai[i].getKlase() < mokiniai[zingsnis].getKlase()) {
                     sukeiciamMokinius(i, zingsnis);
 
-                } else if (vykstaDalykai(mokiniai)[i].getKlase() == vykstaDalykai(mokiniai)[zingsnis].getKlase()) {
-                    if (vykstaDalykai(mokiniai)[i].getPavarde().compareTo(vykstaDalykai(mokiniai)[zingsnis].getPavarde()) < 0) {
+                } else if (mokiniai[i].getKlase() == mokiniai[zingsnis].getKlase()) {
+                    if (mokiniai[i].getPavarde().compareTo(mokiniai[zingsnis].getPavarde()) < 0) {
                         sukeiciamMokinius(i, zingsnis);
 
-                    } else if (vykstaDalykai(mokiniai)[i].getPavarde().compareTo(vykstaDalykai(mokiniai)[zingsnis].getPavarde()) == 0) {
-                        if (vykstaDalykai(mokiniai)[i].getVardas().compareTo(vykstaDalykai(mokiniai)[zingsnis].getVardas()) < 0) {
+                    } else if (mokiniai[i].getPavarde().compareTo(mokiniai[zingsnis].getPavarde()) == 0) {
+                        if (mokiniai[i].getVardas().compareTo(mokiniai[zingsnis].getVardas()) < 0) {
                             sukeiciamMokinius(i, zingsnis);
                         }
                     }
