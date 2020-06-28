@@ -7,58 +7,47 @@ import java.util.Scanner;
 public class gyvenimasPagalMus {
 
     static int peopleCount = (int) (Math.random()*1951) + 50;
-    static People[] localIslanders = new People[peopleCount];
     static int howManyYears;
+    static int[] lulw = new int[peopleCount];
+    static int[] poggers = new int[lulw.length];
+    static int[] ezClap = new int[lulw.length];
 
     public static void main(String[] args) {
 
         int kazkas = 0;
+        System.out.println(Arrays.toString(fill()));
         /*** ***/
+        System.out.println("LOOOOOOOOOL!! "+Arrays.toString(generateAge()));
         System.out.println("Base people count: " + howManyPeople());
-        System.out.println(Arrays.toString(generateAge()));
         countBase();
         while (kazkas < 10) {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Iveskite kiek praejo metu: ");
             howManyYears = scanner.nextInt();
-            newLife();
-            deaths(howManyYears);
-//        System.out.println(islandUpdate());
-            People[] afterUpdate = new People[islandUpdate()];
-            System.out.println(howManyAfterUpdate(afterUpdate));
-            System.out.println(Arrays.toString(afterUpdate));
+            System.out.println(" kiek liko??? "+howManyAfterUpdate(howManyYears));
             kazkas++;
         }
     }
-    static int howManyAfterUpdate(People[] afterUpdate) {
-        int count = 0;
-        for (int i=0;i<afterUpdate.length;i++) {
-            People zmogeliukas = new People();
-            zmogeliukas.setAge(localIslanders[i].getAge());
-            afterUpdate[i] = zmogeliukas;
-            count++;
+    static int[] fill() {
+        for (int i=0;i<ezClap.length;i++) {
+            ezClap[i] = -1;
         }
-        return count;
+        return ezClap;
     }
-    static int islandUpdate() {
-        int upd = (howManyPeople()+newLife()-deaths());
-        System.out.println("Siais metais gime: " + newLife() + " zmones, mire: "+deaths()+". " +
-                "Saloje zmoniu kiekis pakito nuo: "+howManyPeople()+" iki: "+upd+".");
-        return upd;
+    static int howManyAfterUpdate(int year) {
+        return (howManyPeople() + newLife(howManyYears) - deaths(howManyYears) - fiftyPlus(howManyYears));
     }
-    static People[] generateAge() {
-        int maxAge = 100;
-        for (int i=0;i<localIslanders.length;i++) {
-            int ages = (int) (Math.random()*maxAge);
-            People human = new People();
-            human.setAge(ages);
-            localIslanders[i] = human;
+    static int[] generateAge() {
+        int maxAge = 99;
+        for (int i=0;i<lulw.length;i++) {
+            int ages = (int) ((Math.random()*maxAge)+1);
+            lulw[i] = ages;
         }
-        return localIslanders;
+        return lulw;
     }
     static int howManyPeople() {
         int count = 0;
-        for (int i=0;i<localIslanders.length;i++) {
+        for (int i=0;i<lulw.length;i++) {
             count++;
         }
         return count;
@@ -68,17 +57,17 @@ public class gyvenimasPagalMus {
                 count11to20 = 0,
                 count21to50 = 0,
                 count50plus = 0;
-        for (int i=0;i<localIslanders.length;i++) {
-            if (localIslanders[i].getAge() <= 10) {
+        for (int i=0;i<lulw.length;i++) {
+            if (lulw[i] <= 10) {
                 count0to10++;
             }
-            if (localIslanders[i].getAge() >=11 && localIslanders[i].getAge() <= 20) {
+            if (lulw[i] >=11 && lulw[i] <= 20) {
                 count11to20++;
             }
-            if (localIslanders[i].getAge() >=21 && localIslanders[i].getAge() <= 50) {
+            if (lulw[i] >=21 && lulw[i] <= 50) {
                 count21to50++;
             }
-            if (localIslanders[i].getAge() > 50) {
+            if (lulw[i] > 50) {
                 count50plus++;
             }
         }
@@ -87,17 +76,19 @@ public class gyvenimasPagalMus {
         System.out.println("Amziaus 21-50 m. grupeje yra: "+count21to50+" zmoniu");
         System.out.println("Amziaus nuo 50+ m. grupeje yra: "+count50plus+" zmoniu");
     }
-    static int newLife() {
+    static int newLife(int year) {
         int age15to30 = 0,
-            age31to50 = 0;
+                age31to50 = 0;
         Random Birth = new Random();
-        for (int i=0;i<localIslanders.length;i++) {
+        for (int i=0;i<lulw.length;i++) {
             double chance = Birth.nextDouble();
-            if (localIslanders[i].getAge() >=15 && localIslanders[i].getAge() <= 30 && chance < 0.1) {
+            if (lulw[i] >=15 && lulw[i] <= 30 && chance < 0.1+(0.1*year)) {
                 age15to30++;
+                ezClap[i] = 0;
             }
-            if (localIslanders[i].getAge() > 30 && localIslanders[i].getAge() <= 50 && chance < 0.05) {
+            if (lulw[i] > 30 && lulw[i] <= 50 && chance < 0.05+(0.05*year)) {
                 age31to50++;
+                ezClap[i] = 0;
             }
         }
         System.out.println("Amziaus 15-30 palikuoniai: "+age15to30);
@@ -105,33 +96,41 @@ public class gyvenimasPagalMus {
         System.out.println("Kiek gime zmogeliuku: "+(age15to30+age31to50));
         return age15to30+age31to50;
     }
-    static int deaths(int years) {
+    static int deaths(int year) {
         int count0to10 = 0,
-            count11to20 = 0,
-            count21to50 = 0;
-        int count50plus = 0;
+                count11to20 = 0,
+                count21to50 = 0;
         Random Deaths = new Random();
-        for (int i=0;i<localIslanders.length;i++) {
+        for (int i=0;i<lulw.length;i++) {
             double chance = Deaths.nextDouble();
-            if ( localIslanders[i].getAge() <= 10 && chance < 0.05 ) {
+            if ( lulw[i] <= 10 && chance < 0.05+(0.05*year) ) {
                 count0to10++;
-            }
-            if (localIslanders[i].getAge() >=11 && localIslanders[i].getAge() <= 20 && chance < 0.02) {
+            } else { ezClap[i] = lulw[i]; }
+            if (lulw[i] >=11 && lulw[i] <= 20 && chance < 0.02+(0.02*year)) {
                 count11to20++;
-            }
-            if (localIslanders[i].getAge() >=21 && localIslanders[i].getAge() <= 50 && chance < 0.05) {
+            } else { ezClap[i] = lulw[i]; }
+            if (lulw[i] >=21 && lulw[i] <= 50 && chance < 0.05+(0.05*year)) {
                 count21to50++;
-            }
-            if (localIslanders[i].getAge() > 50 && chance < 0.1+(0.02 * years))  {
-                count50plus++;
-            }
+            } else { ezClap[i] = lulw[i]; }
         }
         System.out.println("Amziaus grupeje 0-10 mire: "+count0to10 + " zmoniu");
         System.out.println("Amziaus grupeje 11-20 mire: "+count11to20 + " zmoniu");
         System.out.println("Amziaus grupeje 21-50 mire: "+count21to50 + " zmoniu");
-        System.out.println("Amziaus grupeje 50+ mire: "+count50plus + " zmoniu");
-        System.out.println("Kiek mire zmogeliuku: "+(count0to10+count11to20+count21to50+count50plus));
-        return count0to10+count11to20+count21to50+count50plus;
+        return count0to10+count11to20+count21to50;
+    }
+    static int fiftyPlus(int year) {
+        int count50plus = 0;
+        Random Deaths = new Random();
+        for (int i=0;i<lulw.length;i++) {
+            double chance = Deaths.nextDouble();
+            if (lulw[i] > 50 && chance < 0.1 + (0.02 * year)) {
+                count50plus++;
+            } else {
+                ezClap[i] = lulw[i];
+            }
+        }
+        System.out.println("Amziaus grupeje 50+ mire: "+ count50plus+" zmoniu.");
+        return count50plus;
     }
 }
 
